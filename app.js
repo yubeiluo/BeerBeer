@@ -14,12 +14,26 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
+/*app.use(logger());
+ app.use(express.static(__dirname + '/public'));
+ app.use(function(req, res){
+ res.send('Hello');
+ });*/
+
+
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function (req, res, next) {
+    console.log('%s %s', req.method, req.url);
+    next();
+});
+
 
 app.use('/', routes);
 app.use('/users', users);
